@@ -1,1 +1,3 @@
-https://wiki.inf.ufpr.br/maziero/lib/exe/fetch.php?media=socm:socm-15.pdf
+# Projeto
+
+Este projeto foi feito com o intuito de obter conhecimentos em tecnologias e técnicas para programação avançada para web.
