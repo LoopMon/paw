@@ -1,7 +1,11 @@
 <input type="text" [(ngModel)]="messageVarClasse().content">
-<input type="text" [(ngModel)]="messageVarClasse().username"> <br>
+<input type="text" [(ngModel)]="messageVarClasse().username"> <br><br>
 
-<article class="panel panel-default">
+<article class="panel panel-default" 
+  [ngStyle]="{backgroundColor: color}"
+  (mouseenter)="color = 'lightgreen'"
+  (mouseleave)="color = 'yellow'"
+  >
   <div class="panel-body">
     {{ messageVarClasse().content }}
   </div>
