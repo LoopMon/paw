@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { CommonModule } from '@angular/common';
 
 import { Message } from './messages/message.model'; 
-import { MessageComponent } from './messages/message.component';
+import { MessageListComponent } from './messages/message-list.component';
+import { MessageInputComponent } from './messages/message-input.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MessageComponent, CommonModule],
+  imports: [RouterOutlet, MessageListComponent, MessageInputComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -33,4 +33,4 @@ export class AppComponent {
   valorNgSwitch: number = 0;
 }
 
-// slide 18 do b2
+// slide 29 do b2
