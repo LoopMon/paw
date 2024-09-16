@@ -1,13 +1,11 @@
-<input type="text" [(ngModel)]="messageVarClasse().content">
-<input type="text" [(ngModel)]="messageVarClasse().username"> <br><br>
-
+<br>
 <article class="panel panel-default" 
   [ngStyle]="{backgroundColor: color}"
   (mouseenter)="color = 'lightgreen'"
   (mouseleave)="color = 'yellow'"
   >
   <div class="panel-body">
-    {{ messageVarClasse().content }}
+    {{ messageVarClasse().content }}  
   </div>
 
   <footer class="panel-footer">
