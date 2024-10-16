@@ -1,15 +1,25 @@
-import { FormsModule } from "@angular/forms";
-import { Component } from "@angular/core";
+import { FormsModule, NgForm } from "@angular/forms";
+import { Component, inject } from "@angular/core";
+
+import { MessageService } from "./message.services";
+import { Message } from "./message.model";
 
 @Component ({
     selector: "app-message-input",
     standalone: true,
     imports: [FormsModule],
-    templateUrl: "./message-input.component.html"
+    templateUrl: "./message-input.component.html",
+    styles: `input.ng-invalid.ng-touched { border: 1px solid red; }`
 })
 
 export class MessageInputComponent {
-    onSave(textoConsole: string) {
-        console.log(textoConsole)
+    private messageService = inject(MessageService);
+
+    onSubmit(form: NgForm) {
+        console.log("MessageInputComponent:");
+        console.log(form);
+        const messageAux = new Message(form.value.myContentngForm, 'Lucas');
+        this.messageService.addMessage(messageAux);
+        form.resetForm();
     }
 }
