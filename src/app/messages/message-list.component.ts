@@ -1,5 +1,7 @@
 import { FormsModule } from "@angular/forms";
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+
+import { MessageService } from "./message.services";
 import { MessageComponent } from "./message.component";
 import { Message } from "./message.model";
 
@@ -24,10 +26,17 @@ import { Message } from "./message.model";
     `
 })
 
-export class MessageListComponent {
+export class MessageListComponent implements OnInit {
     messageS: Message[] = [
         new Message("Texto 1 glr", "Luiz"),
         new Message("Texto 2 fml", "Carlos"),
         new Message("Texto 3 povo", "Maria")
-    ]
+    ];
+
+    constructor(private messageService: MessageService){}
+
+    ngOnInit(): void {
+        // messageS aponta para o array messageSService que armazena os dados
+        this.messageS = this.messageService.getMessages();
+    }
 }
