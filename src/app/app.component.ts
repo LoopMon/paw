@@ -32,5 +32,4 @@ export class AppComponent {
 
   valorNgSwitch: number = 0;
 }
-
 // slide 29 do b2

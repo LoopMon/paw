@@ -9,5 +9,7 @@ import { Component } from "@angular/core";
 })
 
 export class MessageInputComponent {
-    
+    onSave(textoConsole: string) {
+        console.log(textoConsole)
+    }
 }
