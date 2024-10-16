@@ -11,9 +11,6 @@ import { Message } from "./message.model";
     styleUrl: './message.component.css'
 })
 
-// ngStyle -> CommonModule
-// ngModel -> FomrsModule
-
 export class MessageComponent {
 
     color = 'yellow'
@@ -21,16 +18,10 @@ export class MessageComponent {
     // @Input() messageVarClasse: Message = new Message("", "");
     
     messageVarClasse = input<Message>(new Message("", ""));
-    
-    /*message = {
-        content: 'KKKK',
-        author: 'Gabriel'
-    }*/
        
     @Output() outputMessage = new EventEmitter<string>();
     
     onEdit() {
-        //alert("Ta funofando!!!");
         this.outputMessage.emit("Retorno: msg filha p/ o app pai");
     }
 }
