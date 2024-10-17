@@ -14,4 +14,3 @@ import { HeaderComponent } from './header.component';
 export class AppComponent {
   title="Programação Avançada para Web"
 }
-// slide 4c1
