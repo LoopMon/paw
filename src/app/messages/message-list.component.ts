@@ -1,8 +1,9 @@
 import { FormsModule } from "@angular/forms";
 import { Component, OnInit } from "@angular/core";
 
-import { MessageService } from "./message.services";
 import { MessageComponent } from "./message.component";
+
+import { MessageService } from "./message.services";
 import { Message } from "./message.model";
 
 @Component ({
@@ -27,16 +28,26 @@ import { Message } from "./message.model";
 })
 
 export class MessageListComponent implements OnInit {
-    messageS: Message[] = [
-        new Message("Texto 1 glr", "Luiz"),
-        new Message("Texto 2 fml", "Carlos"),
-        new Message("Texto 3 povo", "Maria")
-    ];
+    messageS: Message[] = [];
 
     constructor(private messageService: MessageService){}
 
     ngOnInit(): void {
         // messageS aponta para o array messageSService que armazena os dados
-        this.messageS = this.messageService.getMessages();
+        // this.messageS = this.messageService.getMessages();
+        this.messageService.getMessages()
+            .subscribe({
+                next: (dadosSucess: any) => {
+                    console.log(dadosSucess.myMsgSucess);
+                    console.log({ content: dadosSucess.objMessageSRecuperadoS[0].content });
+                    console.log({ id: dadosSucess.objMessageSRecuperadoS[0].messageId });
+
+                    this.messageS = dadosSucess.objMessageSRecuperadoS
+                },
+                error: (dadosErro) => {
+                    console.log(`$== !!Error (subscribe): - ${dadosErro.info_extra} ==`);
+                    console.log(dadosErro);                    
+                }
+            })
     }
 }

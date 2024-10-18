@@ -19,7 +19,19 @@ export class MessageInputComponent {
         console.log("MessageInputComponent:");
         console.log(form);
         const messageAux = new Message(form.value.myContentngForm, 'Lucas');
-        this.messageService.addMessage(messageAux);
+
+        this.messageService.addMessage(messageAux)
+            .subscribe({
+                next: (dadosSucesso: any) => {
+                    console.log(dadosSucesso.myMsgSucess);
+                    console.log({ content: dadosSucesso.objMessageSave.content });
+                    console.log({ _id: dadosSucesso.objMessageSave._id });
+                },
+                error: (dadosErro) => {
+                    console.log(`$== !!Error (subscribe): - ${dadosErro.info_extra} ==`);
+                    console.log(dadosErro);
+                }
+            })
         form.resetForm();
     }
 }
