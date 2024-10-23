@@ -28,16 +28,29 @@ export class MessageService {
     }
 
     deleteMessage(message: Message) {
-        this.messageSService.splice(this.messageSService.indexOf(message), 1)
+        const [messageDeleted] = this.messageSService.splice(this.messageSService.indexOf(message), 1)
+        const messageId = messageDeleted.messageId
+        
+        return this.http.delete<any>(`${this.baseUrl}/message/${messageId}`).pipe(
+            catchError((e) => this.errorHandler(e, 'deleteMessage()')) 
+        );  // Faz a requisição DELETE
+    }
+
+    updateMessage(message: Message, partialMessage: Partial<Message>) {
+        const messageUpdated = this.messageSService[this.messageSService.indexOf(message)]
+        console.log(partialMessage);
+        
+        const messageId = messageUpdated.messageId
+        
+        return this.http.patch<any>(`${this.baseUrl}/message/${messageId}`, partialMessage).pipe(
+            catchError((e) => this.errorHandler(e, 'updateMessage()'))
+        )
     }
 
     getMessages() {
-        // return this.messageSService
         return this.http.get<any>(`${this.baseUrl}/message`).pipe(
             map((responseRecebida: any) => {
                 console.log(responseRecebida);
-                console.log({ content: responseRecebida.objMessageSRecuperadoS[0].content });
-                console.log({ _id: responseRecebida.objMessageSRecuperadoS[0]._id });
                 
                 const messageSResponseRecebida = responseRecebida.objMessageSRecuperadoS
 
@@ -51,10 +64,6 @@ export class MessageService {
 
                 this.messageSService = [...transformedCastMessagesModelFrontend]
                 responseRecebida.objMessageSRecuperadoS = this.messageSService
-
-                console.log({ myMsgSucess: responseRecebida.myMsgSucess });
-                console.log({ content: responseRecebida.objMessageSRecuperadoS[0].content });
-                console.log({ id: responseRecebida.objMessageSRecuperadoS[0].messageId });
 
                 return responseRecebida
             }),
