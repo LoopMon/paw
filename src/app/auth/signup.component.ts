@@ -1,5 +1,8 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
+
+import { UserService } from "./user.services";
+import { User } from "./user.model";
 
 @Component({
     selector: 'app-signup',
@@ -9,10 +12,26 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angula
 })
 
 export class SignUpComponent implements OnInit {
+    private userService = inject(UserService)
     myForm!: FormGroup;
 
     onSubmit() {
-        console.log(this.myForm);
+        const user = new User(
+            this.myForm.value.emailTS,
+            this.myForm.value.passwordTS,
+            this.myForm.value.firstNameTS,
+            this.myForm.value.lastNameTS
+        )
+
+        this.userService.addUser(user).subscribe({
+            next: (dadosSucess: any) => {
+                console.log('signup:',dadosSucess);
+            },
+            error: (dadosErro) => {
+                console.log(`$== !!Error (subscribe): - ${dadosErro.info_extra} ==`);
+                console.log(dadosErro);
+            }
+        })
         this.myForm.reset();
     }
 
