@@ -1,8 +1,10 @@
 import { FormsModule, NgForm } from "@angular/forms";
-import { Component, inject } from "@angular/core";
+import { Component, inject, OnInit } from "@angular/core";
 
 import { MessageService } from "./message.services";
+import { UserService } from "../auth/user.services";
 import { Message } from "./message.model";
+import { User } from "../auth/user.model";
 
 @Component ({
     selector: "app-message-input",
@@ -12,20 +14,18 @@ import { Message } from "./message.model";
     styles: `input.ng-invalid.ng-touched { border: 1px solid red; }`
 })
 
-export class MessageInputComponent {
+export class MessageInputComponent implements OnInit {
     private messageService = inject(MessageService);
+    private userService = inject(UserService)
+    userLogado: User = new User('', '')
 
     onSubmit(form: NgForm) {
-        console.log("MessageInputComponent:");
-        console.log(form);
-        const messageAux = new Message(form.value.myContentngForm, 'Lucas');
+        const messageAux = new Message(form.value.myContentngForm, this.userLogado.email);
 
         this.messageService.addMessage(messageAux)
             .subscribe({
                 next: (dadosSucesso: any) => {
                     console.log(dadosSucesso.myMsgSucess);
-                    console.log({ content: dadosSucesso.objMessageSave.content });
-                    console.log({ _id: dadosSucesso.objMessageSave._id });
                 },
                 error: (dadosErro) => {
                     console.log(`$== !!Error (subscribe): - ${dadosErro.info_extra} ==`);
@@ -33,5 +33,10 @@ export class MessageInputComponent {
                 }
             })
         form.resetForm();
+    }
+
+    ngOnInit(): void {
+        this.userLogado = this.userService.getUsuarioLogado()
+        console.log("foi",this.userLogado);
     }
 }
