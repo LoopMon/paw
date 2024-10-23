@@ -3,6 +3,16 @@
   <div class="panel-body">
     {{ messageVarClasse().content }}  
   </div>
+  @if (possoEditar) {
+    <input 
+      class="edit-message" 
+      [(ngModel)]="messageEdit" 
+      type="text" 
+      placeholder="edite sua mensagem" 
+    >
+    <button class="btn btn-success" (click)="onConfirmEdit()">Salvar Mudança</button>
+    <button class="btn btn-danger" (click)="onEdit()">Cancelar</button>
+  }
 
   <footer class="panel-footer">
     <div class="author">

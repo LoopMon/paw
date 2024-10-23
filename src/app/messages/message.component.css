@@ -33,3 +33,11 @@ input:nth-child(1) {
     text-decoration: underline;
     cursor: pointer;
 }
+
+.edit-message {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #333;
+    outline: none;
+    width: 100%;
+}
