@@ -1,5 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
+import { UserService } from "./user.services";
+import { User } from "./user.model";
 
 @Component({
     selector: 'app-signin',
@@ -9,6 +11,7 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModu
 })
 
 export class SignInComponent implements OnInit {
+    private userService = inject(UserService);
     myFormIn!: FormGroup;
 
     constructor(private fb: FormBuilder) {}
@@ -23,7 +26,19 @@ export class SignInComponent implements OnInit {
     }
 
     onSubmit() {
-        console.log(this.myFormIn);
+        this.userService.getUser(new User(
+            this.myFormIn.value.emailTS,
+            this.myFormIn.value.passwordTS
+        )).subscribe({
+            next: (dadosSucess: any) => {
+                console.log('signin:', dadosSucess);
+                this.userService.setUserLogado(dadosSucess)
+            },
+            error: (dadosErro) => {
+                console.log(`$== !!Error (subscribe): - ${dadosErro.info_extra} ==`);
+                console.log(dadosErro);
+            }
+        })
         this.myFormIn.reset();        
     }
 
